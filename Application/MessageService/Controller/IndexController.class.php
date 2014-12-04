@@ -3,8 +3,10 @@ namespace MessageService\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
-       // $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>[ 您现在访问的是MessageService模块的Index控制器 ]</div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
+
 		echo '欢迎使用消息数据处理模块,处理方法文件在Common文件夹下,数据库文件在DBFile文件夹下.';
+		$this->display();
+
 	/*
 		$senderId=112;
 		$receiverId=211;
@@ -39,4 +41,94 @@ class IndexController extends Controller {
 		echo 'delete myAll ok';
 		*/
     }
+
+    /**
+     * 发布P2P消息
+     * @author 梦天涯
+     */
+    public function insertMessageP2P_C(){
+    	if (IS_POST) {
+
+    		//获取数据
+	    	$senderId = I('senderId');					//此处最好改用Session获取
+	    	$receiverId = I('receiverId');
+	    	$title = I('title');
+	    	$content = I('content');
+	    	$messageType = I('messageType');
+	    	$level= I('level');
+
+
+	    	// 验证数据(此处是附加验证，正确方法是JS验证，需要前台编写JS验证)
+	    	if($senderId==null||!is_numeric($senderId)){	
+				echo "<script> alert('请重新登录！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('User/index/login')."'>"; 
+	    		exit();
+	    	}
+	    	if($receiverId==null||!is_numeric($receiverId)){
+	    		echo "<script> alert('请先选择消息发送对象！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('MessageService/index/index')."'>"; 
+	    		exit();
+	    	}
+	    	if($title=null||$title==""){
+	    		echo "<script> alert('标题不能为空！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('MessageService/index/index')."'>"; 
+	    		exit();
+	    	}
+	    	if($content==null||$content==""){
+	    		echo "<script> alert('消息内容不能为空！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('MessageService/index/index')."'>"; 
+	    		exit();
+	    	}
+	    	if($messageType==null||!is_numeric($messageType)){
+	    		echo "<script> alert('消息类型数据格式错误！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('MessageService/index/index')."'>"; 
+	    		exit();
+	    	}
+	    	if($level==null||!is_numeric($level)){
+	    		echo "<script> alert('消息级别数据格式错误！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('MessageService/index/index')."'>"; 
+	    		exit();
+	    	}
+
+	    	// 数据库操作
+	    	$success=insertMessageP2P($senderId,$receiverId,$title,$content,$messageType,$level);
+	    	if($success){
+	    		$this->success('发布成功！');
+	    		exit();
+	    	}else{
+	    		$this->error('消息发布失败。');;
+	    		exit();
+	    	}
+    	}
+    }
+
+
+     /**
+     * 读取P2P消息
+     * @author 梦天涯
+     */
+    public function getMessageP2P_C(){
+    	if (IS_POST) {
+
+    		//获取数据
+	    	$receiverId = I('receiverId');	//此处最好改用Session获取
+	    	$type = I('type');	
+
+	    	// 验证数据(此处是附加验证，正确方法是JS验证，需要前台编写JS验证)
+	    	if($receiverId==null||!is_numeric($receiverId)){
+	    		echo "<script> alert('请重新登录！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('MessageService/index/index')."'>"; 
+	    		exit();
+	    	}
+	    	if($type==null||!is_numeric($type)){
+	    		echo "<script> alert('查询类型数据格式错误！');</script>"; 
+				echo "<meta http-equiv='Refresh' content='0;URL=".U('MessageService/index/index')."'>"; 
+	    		exit();
+	    	}
+
+	    	// 数据库操作
+	    	$array=getMessageP2P($receiverId,$type);
+	    	$this->assign('MessageList',$array)->display('index');
+    	}
+    }        
 }

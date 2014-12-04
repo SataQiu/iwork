@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>测试接口文件</title>
+<style type="text/css">
+table.hovertable {
+	font-family: verdana,arial,sans-serif;
+	font-size:12px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.hovertable th {
+	background-color:#c3dde0;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table.hovertable tr {
+	background-color:#d4e3e5;
+}
+table.hovertable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+</style>
+</head>
+
+<body>
+
+<table class="hovertable" width="100%" border=1 cellpadding="0" cellspacing="0">
+
+<!-- ######################################################################### -->
+<!-- 这是模板 开始 -->
+
+<tr>
+    <td width="4%">1</td>
+    <td width="15%">
+      发布P2P消息   
+    </td>
+    <td colspan="2">
+      <form method="post" action={:U('MessageService/index/insertMessageP2P_C')} >
+        <p>{:U('MessageService/index/insertMessageP2P_C')}</p>
+        发送者：<select name="senderId" id="senderId">   
+                      <option value="1" selected>千颂伊</option>   
+                      <option value="2">都教授</option>   
+                      <option value="3">李小龙</option>   
+                      <option value="4">叶问</option>   
+                      <option value="5">杨过</option>   
+                  </select>  
+        </br>
+         接收者：<select name="receiverId" id="receiverId">   
+                      <option value="1">千颂伊</option>   
+                      <option value="2" selected>都教授</option>   
+                      <option value="3">李小龙</option>   
+                      <option value="4">叶问</option>   
+                      <option value="5">杨过</option>   
+                  </select>  
+        </br>
+        消息标题：<input name="title" value='测试消息' />
+        </br>
+        消息内容：<input name="content" value='Hello World!' />
+        </br>
+        消息类型：<select name="messageType" id="messageType">   
+                      <option value="1">通知</option>   
+                      <option value="2">回复</option>     
+                  </select>  
+        </br>
+        消息级别：<select name="level" id="level">   
+                      <option value="1">普通</option>   
+                      <option value="2">加急</option>     
+                  </select>  
+        </br>
+        <input type=submit value=submit  />
+      </form>
+    </td>
+</tr>
+
+<!-- 这是模板 结束 -->
+<!-- ######################################################################## -->
+<!-- 这是模板 开始 -->
+
+<tr>
+    <td width="4%">2</td>
+    <td width="15%">
+      查询P2P消息   
+    </td>
+    <td colspan="2">
+      <form method="post" action={:U('MessageService/index/getMessageP2P_C')} >
+        <p>{:U('MessageService/index/getMessageP2P_C')}</p>
+         接收者：<select name="receiverId" id="receiverId">   
+                      <option value="1">千颂伊</option>   
+                      <option value="2" selected>都教授</option>   
+                      <option value="3">李小龙</option>   
+                      <option value="4">叶问</option>   
+                      <option value="5">杨过</option>   
+                  </select>  
+        </br>
+        接收类型：<select name="type" id="type">   
+                      <option value="0">未读</option>   
+                      <option value="1">已读</option>   
+                      <option value="2">所有</option>    
+                  </select>  
+        </br>
+        <input type=submit value=submit  />
+      </form>
+    </td>
+</tr>
+<?php
+dump($MessageList);
+?> 
+<!-- 这是模板 结束 -->
+
+</table>
+</body>
+</html>

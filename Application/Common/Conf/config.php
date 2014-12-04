@@ -20,4 +20,6 @@ return array(
     'DB_SQL_BUILD_LENGTH'   =>  20, // SQL缓存的队列长度
     'DB_SQL_LOG'            =>  false, // SQL执行日志记录
     'DB_BIND_PARAM'         =>  false, // 数据库写入数据自动参数绑定
+    'MODULE_ALLOW_LIST'     =>  array('Home','User','MessageService'),   //模块列表
+    'DEFAULT_MODULE'        =>  'MessageService',                        //默认模块
 );

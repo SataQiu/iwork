@@ -2,7 +2,7 @@
 namespace User\Controller;
 use Think\Controller;
 class IndexController extends Controller {
-    public function hi(){
+    public function login(){
         $this->show('hi');
     }
 
